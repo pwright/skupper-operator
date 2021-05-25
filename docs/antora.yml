@@ -1,0 +1,6 @@
+name: skupper-operator
+title: Skupper
+version: 'latest'
+start_ROOT: ROOT:index.adoc
+nav:
+- modules/ROOT/nav.adoc

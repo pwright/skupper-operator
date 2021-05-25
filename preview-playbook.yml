@@ -1,0 +1,23 @@
+site:
+  title: Skupper PREVIEW
+  # the 404 page and sitemap files only get generated when the url property is set
+  url: https://skupper.io/docs
+  start_page: skupper-operator::index.adoc
+content:
+  sources:
+  - url: ./
+    branches: HEAD
+    start_path: docs
+
+ui:
+  bundle:
+    url: https://github.com/skupperproject/skupper-docs/raw/main/ui-preview-bundle.zip
+    snapshot: true
+
+asciidoc:
+  attributes:
+    plantuml-server-url: 'http://www.plantuml.com/plantuml'
+    plantuml-fetch-diagram: true
+    mod-loc: ROOT:partial$
+    skupper-preview: true
+    skupper-io: true

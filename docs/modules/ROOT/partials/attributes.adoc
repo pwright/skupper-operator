@@ -1,0 +1,50 @@
+// Standard document attributes to be used in the documentation
+//
+// The following are shared by all documents
+
+//:toc:
+//:toclevels: 4
+//:numbered:
+
+// Branding - toggle upstream/downstream content "on/off"
+
+// The following attributes conditionalize content from the Skupper upstream project:
+// * Upstream-only content conditionalized with ifdef::skupper-io[]...endif::[]
+// * Downstream-only content conditionalized with ifdef::product[]...endif::[]
+
+//:imagesdir: _images
+
+
+
+// name and version
+:skupper-name: Skupper
+:service-network: service network
+:skupper-version: 0.5.2
+:skupper-cli-version: {skupper-version}
+:cluster-brand: Kubernetes
+// :skupper-io:
+
+// resolves to blank for skupper
+:version:
+
+// Download URLs
+:linux-download-url-skupper-cli: https://github.com/skupperproject/skupper/releases/download/{skupper-version}/skupper-cli-{skupper-version}-linux-amd64.tgz
+:mac-download-url-skupper-cli: https://github.com/skupperproject/skupper/releases/download/{skupper-version}/skupper-cli-{skupper-version}-mac-amd64.tgz
+
+// URLs
+:GettingStartedLink: link:https://skupper.io/start/index.html[Getting started]
+
+ifdef::skupper-preview[]
+:linkroot: /skupper/latest/
+endif::[]
+//assembly links
+
+
+:OpenShiftTutoriallink: link:{linkroot}cli/openshift.html[Creating a service network with OpenShift]
+:Overviewlink: link:{linkroot}overview/index.html[Overview]
+:Routinglink: link:{linkroot}overview/routing.html[Skupper routing]
+:Securitylink: link:{linkroot}overview/security.html[Skupper security]
+:Connectivitylink: link:{linkroot}overview/connectivity.html[Skupper connectivity]
+:Declarativelink: link:{linkroot}declarative/index.html[Configuring Skupper sites using YAML]
+:Clilink: link:{linkroot}cli/index.html[Configuring Skupper sites using the CLI]
+:Consolelink: link:{linkroot}console/index.html[Monitoring Skupper sites using the console]
