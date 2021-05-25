@@ -1,3 +1,8 @@
+ifndef::[skupper-io]
+:mod-loc: partials/
+:toc:
+endif::[]
+
 include::{mod-loc}attributes.adoc[]
 
 :context: skupper-operator
@@ -89,27 +94,6 @@ $ oc new-project __<project-name>__
 [source,bash,options="nowrap",subs="+quotes"]
 ----
 $ oc project __<project-name>__
-----
-
-. Create a service account to use with the Operator.
-+
-[source,bash,options="nowrap"]
-----
-$ oc create -f deploy/service_account.yaml
-----
-
-. Create a role for the Operator.
-+
-[source,bash,options="nowrap"]
-----
-$ oc create -f deploy/role.yaml
-----
-
-. Create a role binding for the Operator. The role binding binds the previously-created service account to the Operator role, based on the names you specified.
-+
-[source,bash,options="nowrap"]
-----
-$ oc create -f deploy/role_binding.yaml
 ----
 
 In the procedure that follows, you deploy the Operator in your project.
@@ -217,7 +201,14 @@ In {cluster-brand} 4.1 and later, the __Operator Lifecycle Manager__ (OLM) helps
 
 . Choose `{SkupperOperatorName}` from the list of available Operators, and then click btn:[Install].
 
-. On the *Operator Installation* page, select the namespace into which you want to install the Operator, and then click btn:[Install].
+. On the *Operator Installation* page, two *Installation mode* options are available:
++
+* *All namespaces on the cluster*
+* *A specific namespace on the cluster*
++
+For this example, choose *A specific namespace on the cluster*.
+
+. Select the namespace into which you want to install the Operator, and then click btn:[Install].
 +
 The *Installed Operators* page appears displaying the status of the Operator installation.
 
@@ -228,3 +219,45 @@ The *Installed Operators* page appears displaying the status of the Operator ins
 .. Click `{SkupperOperatorName}` on the *Installed Operators* page.
 
 .. Select the *Subscription* tab and view any failures or errors.
+
+
+[id='creating-site-using-operator-{context}']
+== Creating a site using the Skupper Operator
+
+NOTE: The Skupper Operator does not require that you create a CRD.
+
+. Create a YAML file defining the ConfigMap of the site you want to create, for example:
++
+[source,bash,options="nowrap"]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: skupper-site
+  namespace: my-namespace
+data:
+  router-mode: interior
+  console-user: "admin"
+  console-password: "changeme"
+----
++
+Edit the `console-password` value before proceeding.
+
+. Apply the YAML to create a ConfigMap named `skupper-site` in the namespace you want to use:
++
+[source,bash,options="nowrap"]
+----
+$ oc apply -f skupper-site.yaml
+----
+
+. Verify that the site is created by checking that the Skupper router, service controller and site controller pods are running:
++
+[source,bash,options="nowrap"]
+----
+$ oc get pods
+
+NAME                                          READY   STATUS    RESTARTS   AGE
+skupper-router-8c6cc6d76-27562                1/1     Running   0          40s
+skupper-service-controller-57cdbb56c5-vc7s2   1/1     Running   0          34s
+skupper-site-controller-d7b57964-gxms6        1/1     Running   0          51m
+----
